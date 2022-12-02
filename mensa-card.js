@@ -341,4 +341,4 @@ class MensaCard extends HTMLElement {
     }
 }
 
-customElements.define('mensa-card', MensaCard);
+customElements.define('openmensa-card', MensaCard);
