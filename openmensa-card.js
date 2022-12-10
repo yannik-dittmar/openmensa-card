@@ -42,7 +42,7 @@ Date.prototype.getWeekDay = function() {
     return weekday[this.getDay()];
 }
 
-class MensaCard extends HTMLElement {
+class OpenMensaCard extends HTMLElement {
     constructor() {
         super();
     }
@@ -74,7 +74,7 @@ class MensaCard extends HTMLElement {
                 this.style.display = "none";
             };
 
-            this.querySelector("#style").innerHTML = MensaCard.styles;
+            this.querySelector("#style").innerHTML = OpenMensaCard.styles;
 
             this.loadMensas();
         }
@@ -341,4 +341,4 @@ class MensaCard extends HTMLElement {
     }
 }
 
-customElements.define('openmensa-card', MensaCard);
+customElements.define('openmensa-card', OpenMensaCard);

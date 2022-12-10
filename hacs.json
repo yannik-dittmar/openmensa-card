@@ -2,5 +2,5 @@
     "name": "OpenMensa (Multi) Card",
     "content_in_root": true,
     "render_readme": true,
-    "filename": "mensa-card.js"
+    "filename": "openmensa-card.js"
 }
