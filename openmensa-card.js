@@ -42,7 +42,16 @@ Date.prototype.getWeekDay = function() {
     return weekday[this.getDay()];
 }
 
-class OpenMensaCard extends HTMLElement {
+function compareMeals(a, b) {
+  if (a.category.startsWith("Abend") && b.category.startsWith("Abend"))
+    return a.category.localeCompare(b.category);
+  if (a.category.startsWith("Abend"))
+    return 1;
+  if (b.category.startsWith("Abend"))
+    return -1;
+  return a.category.localeCompare(b.category);
+}
+
     constructor() {
         super();
     }
@@ -160,8 +169,10 @@ class OpenMensaCard extends HTMLElement {
             var meals = JSON.parse(result);
             meals = meals.filter(function(meal) {
                 return meal.category != "Info" && 
+                    !meal.category.toLowerCase().includes("theke") &&
                     meal.name.replace(".", "").replace(" ", "").length > 0;
             });
+            meals = meals.sort(compareMeals);
             var has_meals = meals.length > 0;
             day.meals = meals;
             if (mensa.has_meals === false &&
@@ -224,7 +235,17 @@ class OpenMensaCard extends HTMLElement {
 
             var meals_list_body = document.createElement("tbody");
             var found_meals = false;
+            var found_evening_meals = false;
             day.meals.forEach(function(meal) {
+                if (meal.category.startsWith("Abend")) {
+                    if (!found_evening_meals) {
+                        var evening_meals_header = document.createElement("tr");
+                        evening_meals_header.innerHTML = "<th colspan='2' style='text-align: center'>Abendangebot</th>";
+                        meals_list_body.appendChild(evening_meals_header);
+                        found_evening_meals = true;
+                    }
+                }
+
                 var meal_item = document.createElement("tr");
                 var price = meal.prices.students;
                 if (price !== null) {
